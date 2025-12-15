@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://dw6ru3xd6qtcg"]
+
+[ext_resource type="PackedScene" uid="uid://dq8rs7i7dfs6g" path="res://tower.tscn" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://dblu3le01d2kv" path="res://game.gd" id="1_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bsp7da0odftl" path="res://shark.tscn" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://bvcfp37t3118d" path="res://spawner.gd" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://drj43bp1iulk3" path="res://big_shark.tscn" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://bil7rx0kxjnkd" path="res://detector.gd" id="6_7mycd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(203, 640)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_lquwl")
+
+[node name="Tower" parent="." instance=ExtResource("1_1bvp3")]
+position = Vector2(60, 247)
+collision_layer = 2
+collision_mask = 2
+
+[node name="Spawner" type="Marker2D" parent="."]
+position = Vector2(1218, 258)
+script = ExtResource("4_1bvp3")
+enemy_types = Array[PackedScene]([ExtResource("3_h2yge"), ExtResource("5_lquwl")])
+
+[node name="Detector" type="Area2D" parent="."]
+script = ExtResource("6_7mycd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+position = Vector2(-213, 323)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FishThroughLabel" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 60.0
+offset_top = 25.0
+offset_right = 318.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 32
+text = "Shark through: 0"
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 962.0
+offset_top = 25.0
+offset_right = 1083.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 32
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="TestShark" parent="." instance=ExtResource("3_h2yge")]
+position = Vector2(385, 235)
+
+[connection signal="shark_died" from="Spawner" to="." method="_on_update_point"]
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]
+[connection signal="body_entered" from="Detector" to="Detector" method="_on_body_entered"]

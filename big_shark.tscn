@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://drj43bp1iulk3"]
+
+[ext_resource type="Script" uid="uid://cjrhkt8eyqyio" path="res://shark.gd" id="1_qe8vo"]
+[ext_resource type="Texture2D" uid="uid://bj7wm6dwb6xr6" path="res://assets/shark.png" id="2_da3sf"]
+[ext_resource type="PackedScene" uid="uid://cu173wh151qs3" path="res://components/health_component.tscn" id="3_da3sf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bvp3"]
+radius = 65.0
+height = 194.0
+
+[node name="Shark" type="CharacterBody2D" groups=["enemys"]]
+collision_mask = 2
+script = ExtResource("1_qe8vo")
+speed = 100
+hp = 200
+impact_damage = 100
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_da3sf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(2, 0)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_1bvp3")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_da3sf")]
+unique_name_in_owner = true

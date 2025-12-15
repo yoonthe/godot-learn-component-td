@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dq8rs7i7dfs6g"]
+
+[ext_resource type="Texture2D" uid="uid://bt8wxyksmmsh2" path="res://assets/tower.png" id="1_vedim"]
+[ext_resource type="Script" uid="uid://ddroug23cxyt5" path="res://tower.gd" id="2_stebd"]
+[ext_resource type="PackedScene" uid="uid://cu173wh151qs3" path="res://components/health_component.tscn" id="3_stebd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vedim"]
+size = Vector2(70, 144)
+
+[node name="Tower" type="StaticBody2D" groups=["friends"]]
+script = ExtResource("2_stebd")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_vedim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_vedim")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_stebd")]
+unique_name_in_owner = true
