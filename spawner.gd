@@ -17,3 +17,6 @@ func spawn_enemy() -> void:
 
 func _on_enemy_died(point: int) -> void:
 	shark_died.emit(point)
+
+func on_game_over() -> void:
+	queue_free()

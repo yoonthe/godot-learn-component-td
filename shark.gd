@@ -25,7 +25,7 @@ func _physics_process(delta: float) -> void:
 			collider.take_damage(impact_damage)
 			died.emit(point)
 			# TODO: 爆炸效果	
-			queue_free()
+			_on_died()
 			return
 			
 
@@ -36,3 +36,6 @@ func take_damage(damage: int) -> void:
 
 func _on_died() -> void:
 	queue_free()
+	
+func on_game_over() -> void:
+	_on_died()

@@ -1,8 +1,9 @@
 extends StaticBody2D
 
 const BULLET = preload("uid://bgau6yx6pklvy")
-@onready var timer: Timer = $Timer
+
 @export var hp:= 500
+@onready var timer: Timer = $Timer
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var shape: CollisionShape2D = %CollisionShape2D
 
@@ -17,7 +18,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_timer_timeout() -> void:
 	var bullet = BULLET.instantiate()
-	add_child(bullet)
+	bullet.global_position = global_position
+	get_parent().add_child(bullet)
 
 func take_damage(damage: int) -> void:
 	var is_died = health_component.take_damage(damage)
@@ -26,3 +28,6 @@ func take_damage(damage: int) -> void:
 
 func _on_died() -> void:
 	queue_free()
+	
+func on_game_over() -> void:
+	_on_died()
